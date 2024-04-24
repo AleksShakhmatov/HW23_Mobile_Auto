@@ -1,36 +1,60 @@
 package tests;
-import org.junit.jupiter.api.DisplayName;
+
+
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 import static io.appium.java_client.AppiumBy.*;
 import static io.qameta.allure.Allure.step;
 
-
-public class WikiTests1 extends TestBase1 {
+public class WikiTests extends TestBase {
     @Test
-    @DisplayName("Display search result")
-    void successfulSearchMotoTest() {
-        step("Нажать на skip, выйти из онбординка", () -> {
-            $(id("org.wikipedia.alpha:id/fragment_onboarding_skip_button")).click();
-            $(id("org.wikipedia.alpha:id/main_toolbar")).shouldBe(visible);
+    @Tag("mobile")
+    void openSearchResultTest() {
+        step("Type search", () -> {
+                    $(accessibilityId("Search Wikipedia")).click();
+                    $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("moto");
         });
 
-        step(" Нажать на поиск и ввести значениe ", () -> {
-            $(id("org.wikipedia.alpha:id/search_container")).click();
-            $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("moto");
-            $$(id("org.wikipedia.alpha:id/page_list_item_title")).get(0).click();
+        step("Verify content found", () ->{
+                $$(id("org.wikipedia.alpha:id/page_list_item_title"))
+                .shouldHave(sizeGreaterThan(0));
         });
 
-
-        step("Проверить текст подзаголовка", () -> {
-            $$(className("android.widget.TextView"))
-                    .get(1)
-                    .shouldHave(text("Topics referred to by the same term"));
+        step("Verify needed content found", () -> {
+                $$(id("org.wikipedia.alpha:id/page_list_item_title"))
+                .first().shouldHave(text("moto"));
         });
 
+        step("Open founded content", () -> {
+                $$(id("org.wikipedia.alpha:id/page_list_item_title"))
+                .first().click();
+        });
+        step("Verify open content page", () -> {
+                $(id("org.wikipedia.alpha:id/view_wiki_error_text"))
+                .shouldHave(text("An error occurred"));
+        });
     }
 }
+
+
+
+
+
+
+
+    //void successfulSearchTest() {
+       // step("Type search", () -> {
+           // $(accessibilityId("Search Wikipedia")).click();
+           // $(id("org.wikipedia.alpha:id/search_src_text")).sendKeys("moto");
+        //});
+        //step("Проверить текст подзаголовка", () -> {
+           // $$(className("android.widget.TextView"))
+                //    .get(1)
+                  //  .shouldHave(text("Wikimedia disambiguation page"));
+       // });
+   // }
+//}

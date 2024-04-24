@@ -40,3 +40,25 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+HELP.md
+build/
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea
+.notifications
+*.iws
+*.iml
+*.ipr
+
+### Gradle ###
+.gradle
+
+### Logs ###
+*.log
+/.idea
+/build
+/.gradle
+/gradle

@@ -3,7 +3,7 @@ package helpers;
 import static io.restassured.RestAssured.given;
 
 
-public class Browserstack1 {
+public class Browserstack {
 
     // curl -u "qaguru_ti9G5S:5yrxu4nFTKkRExUAhqxh" -X GET "https://api.browserstack.com/app-automate/sessions/0359d759d2aaa4f46401dac46bd281b6d9b24943.json"
     // automation_session.video_url
@@ -12,7 +12,7 @@ public class Browserstack1 {
         String url = String.format("https://api.browserstack.com/app-automate/sessions/%s.json", sessionId);
 
         return given()
-                .auth().basic("qaguru_ti9G5S", "5yrxu4nFTKkRExUAhqxh")
+                .auth().basic("alexandercoluchy_SJ4pLC", "TqQusARF9UJtArLCdeoL")
                 .get(url)
                 .then()
                 .log().status()
